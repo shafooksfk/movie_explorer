@@ -1,0 +1,66 @@
+{% extends 'base.html' %} {% load static%} {%block banner%}
+<div id="index-banner" class="parallax-container">
+  <div class="section no-pad-bot">
+    <div class="container">
+      <div class="row center lighten-4" style="background-color: #cfd8dc2e;">
+        <h1 class="header center white-text text-lighten-2" >
+          Find your favourite movie
+        </h1>
+        <div class="row">
+          <form class="col s12">
+            <div class="row">
+              <div class="input-field col s12">
+                <textarea
+                  typ="submit"
+                  id="textarea1"
+                  name="q"
+                  value="{{ request.GET.q }}"
+                  class="materialize-textarea white-text"
+                ></textarea>
+                <label for="textarea1">Search</label>
+              </div>
+              <button
+                type="submit"
+                name="action"
+                class="waves-effect waves-light btn"
+              >
+                <i class="material-icons left">search</i>Search
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <br /><br />
+    </div>
+  </div>
+  <div class="parallax">
+    <img src="{%static 'img/banner.jpeg' %}" alt="Unsplashed background img 1" />
+  </div>
+</div>
+
+{%endblock%} {% block content%}
+{% if movie_data.Search %}
+  <h2>Popular Movies</h2>
+  <div class="row">
+    {% for movie in movie_data.Search|slice:":4" %}
+      <div class="col s12 m3">
+        <div class="card">
+          <div class="card-image">
+            <a href="{% url 'movie-details' movie.imdbID %}">
+              <img src="{{ movie.Poster }}" />
+            </a>
+          </div>
+          <div class="card-content">
+            <span class="card-title">{{ movie.Title }}</span>
+            <p class="right">{{ movie.Year }}</p>
+            <p>{{ movie.Type }}</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+
+{%endblock%}
